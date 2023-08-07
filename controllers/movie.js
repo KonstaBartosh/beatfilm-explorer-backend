@@ -52,7 +52,13 @@ const deleteMovie = (req, res, next) => {
 
   Movie.findByIdAndDelete(id)
     .then((movies) => res.send(movies))
-    .catch((err) => next(err));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports = {
