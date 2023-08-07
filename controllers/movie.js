@@ -1,5 +1,5 @@
-const BadRequestError = require('../errors/BadRequestError');
 const Movie = require('../models/movie');
+const BadRequestError = require('../errors/BadRequestError');
 
 const createMovie = (req, res, next) => {
   const { _id } = req.user;
