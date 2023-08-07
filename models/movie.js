@@ -26,7 +26,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (value) => validator.isEmail(value),
+      validator: (value) => validator.isURL(value),
       message: 'Incorrect type of url link',
     },
   },
@@ -34,7 +34,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (value) => validator.isEmail(value),
+      validator: (value) => validator.isURL(value),
       message: 'Incorrect type of url link',
     },
   },
@@ -42,7 +42,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (value) => validator.isEmail(value),
+      validator: (value) => validator.isURL(value),
       message: 'Incorrect type of url link',
     },
   },
