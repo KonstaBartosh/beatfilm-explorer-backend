@@ -2,26 +2,26 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
-	email: {
-		type: String,
-		required: true,
-		unique: true,
-		validate: {
-			validator: (value) => validator.isEmail(value),
-			message: 'Incorrect email format',
-		},
-	},
-	password: {
-		type: String,
-		required: true,
-		select: false,
-	},
-	name: {
-		type: String,
-		default: 'Жак-Ив Кусто',
-		minlength: 2,
-		maxlength: 30,
-	},
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: (value) => validator.isEmail(value),
+      message: 'Incorrect email format',
+    },
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
+  },
+  name: {
+    type: String,
+    default: 'Жак-Ив Кусто',
+    minlength: 2,
+    maxlength: 30,
+  },
 });
 
 const User = mongoose.model('user', userSchema);
