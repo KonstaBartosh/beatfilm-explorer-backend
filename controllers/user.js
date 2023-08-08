@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 //* * импортируем модель пользователя */
 const User = require('../models/user');
 
-const SALT_ROUNDS = 10;
+const { SALT_ROUNDS } = process.env;
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
