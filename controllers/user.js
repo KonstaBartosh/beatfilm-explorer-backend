@@ -45,7 +45,7 @@ const login = (req, res, next) => {
         if (!isValidPassword) throw new UnauthorizedError('Неправильные почта или пароль');
 
         const token = createJwtToken(user._id);
-
+        console.log('Аутентификация успешна!');
         return res.status(200).send({ token });
       });
     })
