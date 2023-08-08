@@ -1,19 +1,21 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 //* * импортируем модель пользователя */
 const User = require('../models/user');
 
+const SALT_ROUNDS = 10;
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const { createJwtToken } = require('../helpers/jwt');
 
 //* * Регистрация, POST-запрос на URL /users */
 const register = (req, res, next) => {
   const { name, email, password } = req.body;
+
   //* * хэшируем пароль при отправке в БД + сложность соли */
-  return bcrypt.hash(password, 10)
+  return bcrypt.hash(password, SALT_ROUNDS)
     .then((hash) => User.create({
       name, email, password: hash,
     }))
@@ -32,30 +34,20 @@ const register = (req, res, next) => {
 const login = (req, res, next) => {
   //* * то что приходит в теле запроса от пользователя */
   const { email, password } = req.body;
-  let dataBaseUser;
 
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) throw new UnauthorizedError('Неправильные почта или пароль');
 
-      dataBaseUser = user;
+      //* * сравниваем пароли */
+      bcrypt.compare(password, user.password, (err, isValidPassword) => {
+        //* * хеши не совпали — отклоняем промис */
+        if (!isValidPassword) throw new UnauthorizedError('Неправильные почта или пароль');
 
-      return bcrypt.compare(password, dataBaseUser.password); //* */ сравниваем пароли */
-    })
-    .then((isValidPassword) => {
-      //* */ хеши не совпали — отклоняем промис */
-      if (!isValidPassword) throw new UnauthorizedError('Неправильные почта или пароль');
-      const { NODE_ENV, JWT_SECRET } = process.env;
+        const token = createJwtToken(user._id);
 
-      const token = jwt.sign(
-        { _id: dataBaseUser._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-        { expiresIn: '7d' },
-      );
-
-      console.log('аутентификация успешна');
-
-      return res.status(200).send({ token });
+        return res.status(200).send({ token });
+      });
     })
     .catch((err) => next(err));
 };
