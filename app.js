@@ -8,7 +8,7 @@ const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
-const { PORT, DB_ADRESS } = process.env;
+const { PORT } = process.env;
 
 //* * запуск сервера express.js и прослушивание запросов в порту*/
 app.listen(PORT, () => console.log(`App listening on port: ${PORT}`));
