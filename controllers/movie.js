@@ -1,5 +1,7 @@
 const Movie = require('../models/movie');
 const BadRequestError = require('../errors/BadRequestError');
+const NotFoundError = require('../errors/NotFoundError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
 const createMovie = (req, res, next) => {
   const { _id } = req.user;
@@ -51,7 +53,19 @@ const deleteMovie = (req, res, next) => {
   const { id } = req.params;
 
   Movie.findByIdAndDelete(id)
-    .then((movies) => res.send(movies))
+    .then((movie) => {
+      if (!movie) {
+        throw new NotFoundError('Фильм не найден');
+      }
+      if (req.user._id === movie.owner.toString()) {
+        // Пользователь является владельцем карточки, можно удалить
+        return movie.deleteOne();
+      }
+      throw new ForbiddenError('Недостаточно прав для удаления фильма');
+    })
+
+    .then((removedMovie) => res.send(removedMovie))
+
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Переданы некорректные данные'));
