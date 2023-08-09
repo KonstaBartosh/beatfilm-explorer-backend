@@ -8,13 +8,13 @@ const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
-const { PORT, DB_ADRESS, TEST } = process.env;
+const { PORT, DB_ADRESS } = process.env;
 
 //* * запуск сервера express.js и прослушивание запросов в порту*/
 app.listen(PORT, () => console.log(`App listening on port: ${PORT}`));
 
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb')
-  .then(() => console.log(`Connected to DB${  TEST}`))
+  .then(() => console.log('Connected to DB'))
   .catch((err) => console.error('Error:', err));
 
 app.use(cors());
