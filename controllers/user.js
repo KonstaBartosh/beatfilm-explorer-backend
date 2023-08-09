@@ -4,7 +4,6 @@ require('dotenv').config();
 //* * импортируем модель пользователя */
 const User = require('../models/user');
 
-const { SALT_ROUNDS } = process.env;
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
@@ -16,7 +15,7 @@ const register = (req, res, next) => {
   const { name, email, password } = req.body;
 
   //* * хэшируем пароль при отправке в БД + сложность соли */
-  return bcrypt.hash(password, SALT_ROUNDS)
+  return bcrypt.hash(password, 10)
     .then((hash) => User.create({
       name, email, password: hash,
     }))
