@@ -13,7 +13,7 @@ const { PORT } = process.env;
 //* * запуск сервера express.js и прослушивание запросов в порту*/
 app.listen(PORT, () => console.log(`App listening on port: ${PORT}`));
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb')
+mongoose.connect('mongodb://127.0.0.1:27017/diploma_db')
   .then(() => console.log('Connected to DB'))
   .catch((err) => console.error('Error:', err));
 
