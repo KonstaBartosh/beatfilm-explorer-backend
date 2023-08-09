@@ -32,13 +32,15 @@ const validateNewMovie = celebrate({
 
     country: Joi.string().min(2).max(30).required(),
     director: Joi.string().min(2).max(30).required(),
-    year: Joi.string().min(2).max(30).required(),
-    description: Joi.string().min(2).max(30).required(),
-    duration: Joi.number().min(2).max(30).required(),
+    year: Joi.string().min(2).max(4).required(),
+    description: Joi.string().min(2).max(50).required(),
+    duration: Joi.number().required(),
 
     image: Joi.string().required().pattern(linkRegex),
     trailerLink: Joi.string().required().pattern(linkRegex),
     thumbnail: Joi.string().required().pattern(linkRegex),
+    movieId: Joi.string(),
+
   }),
 });
 
