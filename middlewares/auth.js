@@ -1,7 +1,6 @@
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const { verifyJwtToken } = require('../helpers/jwt');
 
-// eslint-disable-next-line consistent-return
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
 
@@ -20,7 +19,8 @@ const auth = (req, res, next) => {
   }
   //* * записываем пейлоуд в объект запроса */
   req.user = payload;
-  next(); //* * пропускаем запрос дальше */
+  //* * пропускаем запрос дальше */
+  next();
 };
 
 module.exports = auth;
