@@ -20,9 +20,9 @@ const register = (req, res, next) => {
     .then(() => res.status(201).send({ message: `Пользователь ${email} успешно зарегестрирован.` }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные'));
+        next(new BadRequestError('При регистрации пользователя произошла ошибка.'));
       } else if (err.code === 11000) {
-        next(new ConflictError('Такой пользователь уже сущетсвует'));
+        next(new ConflictError('Пользователь с таким email уже существует.'));
       } else {
         next(err);
       }
@@ -35,12 +35,12 @@ const login = (req, res, next) => {
 
   User.findOne({ email }).select('+password')
     .then((user) => {
-      if (!user) throw new UnauthorizedError('Неправильные почта или пароль');
+      if (!user) throw new UnauthorizedError('Вы ввели неправильный логин или пароль.');
 
       //* * сравниваем пароли */
       bcrypt.compare(password, user.password, (err, isValidPassword) => {
         //* * хеши не совпали — отклоняем промис */
-        if (!isValidPassword) throw new UnauthorizedError('Неправильные почта или пароль');
+        if (!isValidPassword) throw new UnauthorizedError('Вы ввели неправильный логин или пароль.');
 
         const token = createJwtToken(user._id);
         console.log('Аутентификация успешна!');
@@ -90,7 +90,7 @@ const updateUser = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные'));
+        next(new BadRequestError('При обновлении профиля произошла ошибка'));
       } else {
         next(err);
       }
