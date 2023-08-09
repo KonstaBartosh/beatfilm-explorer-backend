@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 //* * импортируем модель пользователя */
 const User = require('../models/user');
