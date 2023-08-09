@@ -5,10 +5,11 @@ const NotFoundError = require('../errors/NotFoundError');
 const auth = require('../middlewares/auth');
 const userRouter = require('./user');
 const movieRouter = require('./movie');
+const { registerValidation, loginValidation } = require('../middlewares/validation');
 
 //* * роуты не требующие авторизации */
-router.post('/signup', register);
-router.post('/signin', login);
+router.post('/signup', registerValidation, register);
+router.post('/signin', loginValidation, login);
 
 //* * авторизация */
 router.use(auth);

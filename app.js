@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 const cors = require('cors');
 
 const router = require('./routes/index');
@@ -21,4 +22,5 @@ app.use(express.json());
 app.use(requestLogger);
 app.use(router);
 app.use(errorLogger);
+app.use(errors());
 app.use(error);
