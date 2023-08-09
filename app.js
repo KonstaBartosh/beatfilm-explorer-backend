@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
+const helmet = require('helmet');
 
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -17,6 +18,7 @@ mongoose.connect(DB)
   .then(() => console.log('Connected to DB'))
   .catch((err) => console.error('Error:', err));
 
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
