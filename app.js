@@ -1,19 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
 
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const error = require('./middlewares/error');
+const { SERVER_PORT, DB } = require('./helpers/config');
 
 const app = express();
-const { PORT } = process.env;
 
 //* * запуск сервера express.js и прослушивание запросов в порту*/
-app.listen(PORT, () => console.log(`App listening on port: ${PORT}`));
+app.listen(SERVER_PORT, () => console.log(`App listening on port: ${SERVER_PORT}`));
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb')
+mongoose.connect(DB)
   .then(() => console.log('Connected to DB'))
   .catch((err) => console.error('Error:', err));
 
