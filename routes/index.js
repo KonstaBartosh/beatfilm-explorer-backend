@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const rateLimit = require('express-rate-limit')
+const rateLimit = require('express-rate-limit');
 
 const { register, login } = require('../controllers/user');
 const NotFoundError = require('../errors/NotFoundError');
