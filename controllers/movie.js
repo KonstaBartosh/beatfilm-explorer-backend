@@ -44,28 +44,23 @@ const createMovie = (req, res, next) => {
 };
 
 const getMovies = (req, res, next) => {
-  Movie.find({})
+  Movie
+    .find({})
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
 };
 
 const deleteMovie = (req, res, next) => {
-  const { id } = req.params;
-
-  Movie.findByIdAndDelete(id)
+  Movie.findByIdAndDelete(req.params.id)
+    .orFail(new NotFoundError('Фильм не найден'))
     .then((movie) => {
-      if (!movie) {
-        throw new NotFoundError('Фильм не найден');
-      }
       if (req.user._id === movie.owner.toString()) {
         // Пользователь является владельцем карточки, можно удалить
         return movie.deleteOne();
       }
       throw new ForbiddenError('Недостаточно прав для удаления фильма');
     })
-
     .then((removedMovie) => res.send(removedMovie))
-
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Переданы некорректные данные'));
