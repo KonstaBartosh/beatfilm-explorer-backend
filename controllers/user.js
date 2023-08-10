@@ -33,17 +33,18 @@ const login = (req, res, next) => {
   //* * то что приходит в теле запроса от пользователя */
   const { email, password } = req.body;
 
-  User.findOne({ email }).select('+password')
+  User
+    .findOne({ email })
+    .select('+password') //  включение в поиск скрытого поля
+    .orFail(new UnauthorizedError('Неправильные почта или пароль'))
     .then((user) => {
-      if (!user) throw new UnauthorizedError('Неправильные почта или пароль');
-
       //* * сравниваем пароли */
       bcrypt.compare(password, user.password, (err, isValidPassword) => {
         //* * хеши не совпали — отклоняем промис */
         if (!isValidPassword) throw new UnauthorizedError('Неправильные почта или пароль');
 
         const token = createJwtToken(user._id);
-        console.log('Аутентификация успешна!');
+
         return res.status(200).send({ token });
       });
     })
@@ -60,15 +61,12 @@ const getUsers = (req, res, next) => {
 //* * GET-запрос на URL /users/me */
 const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
+    .orFail(new NotFoundError('Пользователь не найден'))
     .then((user) => {
-      if (!user) {
-        next(new NotFoundError('Пользователь не найден'));
-      } else {
-        res.send({
-          name: user.name,
-          email: user.email,
-        });
-      }
+      res.send({
+        name: user.name,
+        email: user.email,
+      });
     })
     .catch((err) => next(err));
 };
