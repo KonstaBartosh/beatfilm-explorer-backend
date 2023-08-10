@@ -11,7 +11,7 @@ const { SERVER_PORT, DB } = require('./helpers/config');
 
 const app = express();
 
-//* * запуск сервера express.js и прослушивание запросов в порту*/
+//* * запуск сервера express.js */
 app.listen(SERVER_PORT, () => console.log(`App listening on port: ${SERVER_PORT}`));
 
 mongoose.connect(DB)
