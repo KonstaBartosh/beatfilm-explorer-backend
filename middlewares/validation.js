@@ -25,6 +25,12 @@ const validateUpdateUser = celebrate({
   }),
 });
 
+const validateUSerId = celebrate({
+  params: Joi.object().keys({
+    id: Joi.string().required().length(24).hex(),
+  }),
+});
+
 const validateNewMovie = celebrate({
   body: Joi.object().keys({
     nameRU: Joi.string().min(2).max(50).required(),
@@ -47,4 +53,5 @@ module.exports = {
   loginValidation,
   validateUpdateUser,
   validateNewMovie,
+  validateUSerId,
 };
