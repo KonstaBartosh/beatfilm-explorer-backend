@@ -41,7 +41,7 @@ const validateNewMovie = celebrate({
     description: Joi.string().min(2).required(),
     duration: Joi.number().required(),
     image: Joi.string().required().pattern(linkRegex),
-    trailerLink: Joi.string().required().pattern(linkRegex),
+    trailerLink: Joi.string().required().uri(),
     thumbnail: Joi.string().required().pattern(linkRegex),
     movieId: Joi.number().required(),
 
