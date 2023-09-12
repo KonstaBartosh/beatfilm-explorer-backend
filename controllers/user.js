@@ -39,24 +39,19 @@ const register = (req, res, next) => {
 };
 
 const login = (req, res, next) => {
-  //* * то что приходит в теле запроса от пользователя */
   const { email, password } = req.body;
 
-  User
-    .findOne({ email })
-    .select('+password') //  включение в поиск скрытого поля
+  User.findOne({ email }).select('+password')
     .orFail(new UnauthorizedError(wrongDataMessage))
-    .then((user) => {
-      //* * сравниваем пароли */
-      bcrypt.compare(password, user.password, (err, isValidPassword) => {
-        //* * хеши не совпали — отклоняем промис */
-        if (!isValidPassword) throw new UnauthorizedError(wrongDataMessage);
+    .then((user) => bcrypt.compare(password, user.password).then((isValidPassword) => {
+      if (!isValidPassword) {
+        throw new UnauthorizedError(wrongDataMessage);
+      }
 
-        const token = createJwtToken(user._id);
+      const token = createJwtToken(user._id);
 
-        return res.status(200).send({ token });
-      });
-    })
+      return res.status(200).send({ token });
+    }))
     .catch((err) => next(err));
 };
 
