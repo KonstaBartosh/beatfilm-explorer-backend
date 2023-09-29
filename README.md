@@ -9,9 +9,6 @@
 - хэширование пароля
 - добавлен код-стайл AirBnb с помощью eslint
 
-[Сслыка на GitHub репозиторий](https://github.com/KonstaBartosh/movies-explorer-api)
-
-
 ## Запуск проекта
 
 `npm run start` — запускает сервер   
@@ -20,6 +17,5 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.8.179
-
-Backend https://api.moviexplorer.nomoreparties.co
+IP-адрес 90.156.208.60
+домен бэкенда https://api.moviexplorer.nomoreparties.co
