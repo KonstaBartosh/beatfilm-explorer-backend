@@ -30,6 +30,7 @@ const movieNotFoundMessage = 'Фильм не найден';
 const deleteFilmPermissionError = 'Недостаточно прав для удаления фильма';
 const authorizationTokenInvalidError = 'При авторизации произошла ошибка. Переданный токен некорректен';
 const authorizationTokenFormatError = 'При авторизации произошла ошибка. Токен не передан или передан не в том формате';
+const tooManyRequestsMessage = 'Слишком много запросов, пожалуйста попробуйте позже';
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
 const LINK_REGEX = /^(http|https):\/\/(?:www\.)?[a-zA-Z0-9._~\-:?#[\]@!$&'()*+,/;=]{2,256}\.[a-zA-Z0-9./?#-]{2,}$/;
 
@@ -51,4 +52,5 @@ module.exports = {
   deleteFilmPermissionError,
   authorizationTokenInvalidError,
   authorizationTokenFormatError,
+  tooManyRequestsMessage,
 };
