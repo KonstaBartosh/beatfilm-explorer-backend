@@ -1,5 +1,4 @@
 const rateLimit = require('express-rate-limit');
-// const TooManyRequestsError = require('../errors/TooManyRequestsError');
 const { tooManyRequestsMessage } = require('./config');
 
 //* * ограничитель запросов */
