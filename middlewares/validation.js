@@ -6,14 +6,14 @@ const linkRegex = /^(http|https):\/\/(?:www\.)?[a-zA-Z0-9._~\-:?#[\]@!$&'()*+,/;
 const registerValidation = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().required().email().pattern(emailRegex),
+    email: Joi.string().required().pattern(emailRegex),
     password: Joi.string().required(),
   }),
 });
 
 const loginValidation = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().required().email().pattern(emailRegex),
+    email: Joi.string().required().pattern(emailRegex),
     password: Joi.string().required(),
   }),
 });
@@ -21,7 +21,7 @@ const loginValidation = celebrate({
 const validateUpdateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().required().email().pattern(emailRegex),
+    email: Joi.string().required().pattern(emailRegex),
   }),
 });
 
