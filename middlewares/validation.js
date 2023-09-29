@@ -1,19 +1,17 @@
 const { celebrate, Joi } = require('celebrate');
-
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-const linkRegex = /^(http|https):\/\/(?:www\.)?[a-zA-Z0-9._~\-:?#[\]@!$&'()*+,/;=]{2,256}\.[a-zA-Z0-9./?#-]{2,}$/;
+const { EMAIL_REGEX, LINK_REGEX } = require('../helpers/config');
 
 const registerValidation = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().required().pattern(emailRegex),
+    email: Joi.string().required().pattern(EMAIL_REGEX),
     password: Joi.string().required(),
   }),
 });
 
 const loginValidation = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().required().pattern(emailRegex),
+    email: Joi.string().required().pattern(EMAIL_REGEX),
     password: Joi.string().required(),
   }),
 });
@@ -21,7 +19,7 @@ const loginValidation = celebrate({
 const validateUpdateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().required().pattern(emailRegex),
+    email: Joi.string().required().pattern(EMAIL_REGEX),
   }),
 });
 
@@ -41,12 +39,11 @@ const validateNewMovie = celebrate({
     description: Joi.string().min(2).required(),
     duration: Joi.number().required(),
     image: {
-      url: Joi.string().required().pattern(linkRegex),
+      url: Joi.string().required().pattern(LINK_REGEX),
     },
     trailerLink: Joi.string().required().uri(),
-    thumbnail: Joi.string().required().pattern(linkRegex),
+    thumbnail: Joi.string().required().pattern(LINK_REGEX),
     movieId: Joi.number().required(),
-
   }),
 });
 
