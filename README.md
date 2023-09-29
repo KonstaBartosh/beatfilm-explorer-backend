@@ -15,7 +15,7 @@
 `npm run dev` — запускает сервер с hot-reload
 
 
-## Ссылки на проект
+## Детали
 
-IP-адрес 90.156.208.60
-домен бэкенда https://api.moviexplorer.nomoreparties.co
+* IP-адрес 90.156.208.60
+* домен бэкенда https://api.moviexplorer.nomoreparties.co
